@@ -6,6 +6,10 @@ public class FeatureListDTO {
 
 	private List<FeatureDTO> featureList;
 
+	public FeatureListDTO(List<FeatureDTO> featureList) {
+		this.featureList = featureList;
+	}
+
 	public List<FeatureDTO> getFeatureList() {
 		return featureList;
 	}
