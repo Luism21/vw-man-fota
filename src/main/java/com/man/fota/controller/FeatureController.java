@@ -14,34 +14,34 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-@RequestMapping("/vehicles")
+@RequestMapping("/features")
 @Api(tags = {"fota"}, description = "Query possible features per vehicle and possible vehicles per feature")
-public class VehicleController {
+public class FeatureController {
 	
 	@GetMapping
-	@ApiOperation(value = "Find all vehicles")
-	public ResponseEntity<VehicleListDTO> getAllVehicles() {
+	@ApiOperation(value = "Find all features")
+	public ResponseEntity<VehicleListDTO> getAllFeatures() {
 		VehicleListDTO vehicleList = null;
 		return ResponseEntity.accepted().body(vehicleList);
 	}
 	
-	@GetMapping("/{vin}/installable")
-	@ApiOperation(value = "Find installable features by VIN")
-	public ResponseEntity<FeatureListDTO> getInstallables(@PathVariable(required = true) String vin) {
+	@GetMapping("/{feature}/installable")
+	@ApiOperation(value = "Find installable VIN's by feature code")
+	public ResponseEntity<FeatureListDTO> getInstallables(@PathVariable(required = true) String feature) {
 		FeatureListDTO featureList = null;
 		return ResponseEntity.accepted().body(featureList);
 	}
 	
-	@GetMapping("/{vin}/incompatible")
-	@ApiOperation(value = "Find incompatible features by VIN")
-	public ResponseEntity<FeatureListDTO> getIncompatibles(@PathVariable(required = true) String vin) {
+	@GetMapping("/{feature}/incompatible")
+	@ApiOperation(value = "Find incompatible VIN's by feature code")
+	public ResponseEntity<FeatureListDTO> getIncompatibles(@PathVariable(required = true) String feature) {
 		FeatureListDTO featureList = null;
 		return ResponseEntity.accepted().body(featureList);
 	}
 	
-	@GetMapping("/{vin}")
-	@ApiOperation(value = "Find all features by VIN")
-	public ResponseEntity<VehicleFeaturesListDTO> getAllFeatures(@PathVariable(required = true) String vin) {
+	@GetMapping("/{feature}")
+	@ApiOperation(value = "Find all VIN's by feature code")
+	public ResponseEntity<VehicleFeaturesListDTO> getAllFeatures(@PathVariable(required = true) String feature) {
 		VehicleFeaturesListDTO featureList = null;
 		return ResponseEntity.accepted().body(featureList);
 	}
