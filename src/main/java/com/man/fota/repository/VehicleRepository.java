@@ -1,9 +1,9 @@
 package com.man.fota.repository;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.man.fota.model.Vehicle;
 
-public interface VehicleRepository extends CrudRepository<Vehicle, String> {
+public interface VehicleRepository extends JpaRepository<Vehicle, String> {
 
 }
