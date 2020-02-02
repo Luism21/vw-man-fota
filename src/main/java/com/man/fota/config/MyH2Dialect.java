@@ -8,5 +8,10 @@ public class MyH2Dialect extends H2Dialect {
     public boolean dropConstraints() {
         return true;
     }
+    
+    @Override
+    public boolean supportsIfExistsAfterAlterTable() {
+        return true;
+    }
 
 }
