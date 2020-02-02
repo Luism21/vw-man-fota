@@ -1,5 +1,7 @@
 package com.man.fota.controller;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,6 +24,8 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping("/features")
 @Api(tags = {"fota"}, description = "Query possible features per vehicle and possible vehicles per feature")
 public class FeatureController extends GenericController {
+	
+	private static final Logger logger = LogManager.getLogger(FeatureController.class);
 	
 	@Autowired
 	private FeatureService featureService;

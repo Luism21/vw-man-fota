@@ -2,6 +2,8 @@ package com.man.fota.service;
 
 import java.util.function.Function;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,12 +19,17 @@ import com.man.fota.repository.VehicleRepository;
 @Transactional
 public class VehicleServiceImpl implements VehicleService {
 
+	private static final Logger logger = LogManager.getLogger(VehicleServiceImpl.class);
+	
 	@Autowired
 	VehicleRepository vehicleRepository;
 
 	@Override
 	public Page<VehicleDTO> getAllVehicles(Pageable pageable) {
+		logger.info("Finding all vehicles");
 		Page<Vehicle> vehiclePage = vehicleRepository.findAll(pageable);
+		
+		logger.info("Converting all vehicles to VehicleDTO");
 		Page<VehicleDTO> dtoPage = vehiclePage.map(new Function<Vehicle, VehicleDTO>() {
 		    @Override
 		    public VehicleDTO apply(Vehicle vehicle) {

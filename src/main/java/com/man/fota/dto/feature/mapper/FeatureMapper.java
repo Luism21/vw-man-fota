@@ -4,14 +4,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.man.fota.dto.feature.FeatureCodesDTO;
 import com.man.fota.dto.feature.FeatureDTO;
 import com.man.fota.model.Feature;
 import com.man.fota.model.FeatureCode;
 
 public class FeatureMapper {
+	
+	private static final Logger logger = LogManager.getLogger(FeatureMapper.class);
 
 	public static FeatureDTO toDTO(Feature feature) {
+		logger.info("Converting Feature " + feature.getFeatureId() + " to FeatureDTO");
 		FeatureDTO featureDto = new FeatureDTO();
 		featureDto.setFeatureId(feature.getFeatureId());
 		featureDto.setSoftwareCodes(new FeatureCodesDTO());
@@ -34,6 +40,7 @@ public class FeatureMapper {
 				.filter(c -> c.getIsSoftware() == false && c.getMustBePresent() == false)
 				.map(FeatureCode::getCode)
 				.collect(Collectors.toList()));
+		logger.info("Feature " + feature.getFeatureId() + "converted to FeatureDTO");
 		return featureDto;
 	}
 	
