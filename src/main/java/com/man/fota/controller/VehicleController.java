@@ -1,5 +1,7 @@
 package com.man.fota.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -10,10 +12,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.man.fota.dto.feature.FeatureDTO;
 import com.man.fota.dto.feature.FeatureListDTO;
 import com.man.fota.dto.feature.VehicleFeaturesListDTO;
 import com.man.fota.dto.vehicle.VehicleDTO;
 import com.man.fota.dto.vehicle.VehicleListDTO;
+import com.man.fota.service.FeatureService;
 import com.man.fota.service.VehicleService;
 
 import io.swagger.annotations.Api;
@@ -27,6 +31,9 @@ public class VehicleController extends GenericController {
 	@Autowired
 	private VehicleService vehicleService;
 	
+	@Autowired
+	private FeatureService featureService;
+	
 	@GetMapping
 	@ApiOperation(value = "Find all vehicles")
 	public ResponseEntity<VehicleListDTO> getAllVehicles(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = DEFAULT_PAGE_SIZE) Integer pageSize) {
@@ -37,8 +44,8 @@ public class VehicleController extends GenericController {
 	@GetMapping("/{vin}/installable")
 	@ApiOperation(value = "Find installable features by VIN")
 	public ResponseEntity<FeatureListDTO> getInstallables(@PathVariable(required = true) String vin) {
-		FeatureListDTO featureList = null;
-		return ResponseEntity.ok().body(featureList);
+		List<FeatureDTO> featureList = featureService.getAllInstallablesFeaturesByVin(vin);
+		return ResponseEntity.ok().body(new FeatureListDTO(featureList));
 	}
 	
 	@GetMapping("/{vin}/incompatible")

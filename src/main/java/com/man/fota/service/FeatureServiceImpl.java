@@ -1,5 +1,6 @@
 package com.man.fota.service;
 
+import java.util.List;
 import java.util.function.Function;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,11 @@ public class FeatureServiceImpl implements FeatureService {
 		    }
 		});
 		return dtoPage;
+	}
+	
+	@Override
+	public List<FeatureDTO> getAllInstallablesFeaturesByVin(String vin) {
+		return FeatureMapper.toDTO(featureRepository.getAllInstablleFeaturesByVin1stQuery(vin));
 	}
 
 }
