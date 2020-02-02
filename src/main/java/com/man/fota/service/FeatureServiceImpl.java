@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.man.fota.dto.feature.FeatureDTO;
+import com.man.fota.dto.feature.VehicleFeaturesListDTO;
 import com.man.fota.dto.feature.mapper.FeatureMapper;
 import com.man.fota.model.Feature;
 import com.man.fota.repository.FeatureRepository;
@@ -41,6 +42,14 @@ public class FeatureServiceImpl implements FeatureService {
 	@Override
 	public List<FeatureDTO> getAllIncompatibleFeaturesByVin(String vin) {
 		return FeatureMapper.toDTO(featureRepository.getAllIncompatibleFeaturesByVin(vin));
+	}
+
+	@Override
+	public VehicleFeaturesListDTO getAllFeaturesByVin(String vin) {
+		VehicleFeaturesListDTO vehicleFeaturesListDto = new VehicleFeaturesListDTO();
+		vehicleFeaturesListDto.setInstallableFeatureList(getAllInstallablesFeaturesByVin(vin));
+		vehicleFeaturesListDto.setIncompatibleFeatureList(getAllIncompatibleFeaturesByVin(vin));
+		return vehicleFeaturesListDto;
 	}
 
 }

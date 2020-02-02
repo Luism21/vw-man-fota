@@ -58,7 +58,7 @@ public class VehicleController extends GenericController {
 	@GetMapping("/{vin}")
 	@ApiOperation(value = "Find all features by VIN")
 	public ResponseEntity<VehicleFeaturesListDTO> getAllFeatures(@PathVariable(required = true) String vin) {
-		VehicleFeaturesListDTO featureList = null;
+		VehicleFeaturesListDTO featureList = featureService.getAllFeaturesByVin(vin);
 		return ResponseEntity.ok().body(featureList);
 	}
 

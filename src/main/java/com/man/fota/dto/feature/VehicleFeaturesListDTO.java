@@ -1,5 +1,6 @@
 package com.man.fota.dto.feature;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class VehicleFeaturesListDTO {
@@ -7,6 +8,18 @@ public class VehicleFeaturesListDTO {
 	private List<FeatureDTO> installableFeatureList;
 
 	private List<FeatureDTO> incompatibleFeatureList;
+	
+	public VehicleFeaturesListDTO() {
+		super();
+		this.installableFeatureList = new ArrayList<>();
+		this.incompatibleFeatureList = new ArrayList<>();
+	}
+
+	public VehicleFeaturesListDTO(List<FeatureDTO> installableFeatureList, List<FeatureDTO> incompatibleFeatureList) {
+		super();
+		this.installableFeatureList = installableFeatureList;
+		this.incompatibleFeatureList = incompatibleFeatureList;
+	}
 
 	public List<FeatureDTO> getInstallableFeatureList() {
 		return installableFeatureList;
