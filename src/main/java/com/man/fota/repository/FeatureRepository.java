@@ -21,9 +21,20 @@ public interface FeatureRepository extends JpaRepository<Feature, String> {
 			"WHERE  f.must_be_present = true AND v.vin IS NULL) " +
 
 			"AND feature_id not in " +
-			"(SELECT   * FROM feature_code f " +
+			"(SELECT DISTINCT f.feature_id FROM feature_code f " +
 			"JOIN vehicle_code v   ON f.code = v.code  AND ( v.vin = :vin )   " +
 			"WHERE  f.must_be_present = false); ", nativeQuery = true)
-	List<Feature> getAllInstablleFeaturesByVin1stQuery(@Param("vin") String vin);
+	List<Feature> getAllInstablleFeaturesByVin(@Param("vin") String vin);
+	
+	@Query(	value="SELECT DISTINCT feature_id FROM  feature_code f " +
+			"WHERE feature_id in  " +
+			"(SELECT DISTINCT f.feature_id FROM feature_code f   " +
+			"LEFT JOIN vehicle_code v  ON f.code = v.code  AND ( v.vin = :vin  AND v.vin IS NOT NULL )   " +
+			"WHERE  f.must_be_present = true AND v.vin IS NULL) " +
+			"OR feature_id in " +
+			"(SELECT  DISTINCT f.feature_id FROM feature_code f " +
+			"JOIN vehicle_code v ON f.code = v.code  AND ( v.vin = :vin )   " +
+			"WHERE  f.must_be_present = false)", nativeQuery = true)
+	List<Feature> getAllIncompatibleFeaturesByVin(@Param("vin") String vin);
 	
 }

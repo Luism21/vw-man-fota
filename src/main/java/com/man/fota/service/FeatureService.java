@@ -12,5 +12,7 @@ public interface FeatureService {
 	Page<FeatureDTO> getAllFeatures(Pageable paginable);
 
 	List<FeatureDTO> getAllInstallablesFeaturesByVin(String vin);
+
+	List<FeatureDTO> getAllIncompatibleFeaturesByVin(String vin);
 	
 }

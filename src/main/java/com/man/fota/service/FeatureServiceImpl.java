@@ -35,7 +35,12 @@ public class FeatureServiceImpl implements FeatureService {
 	
 	@Override
 	public List<FeatureDTO> getAllInstallablesFeaturesByVin(String vin) {
-		return FeatureMapper.toDTO(featureRepository.getAllInstablleFeaturesByVin1stQuery(vin));
+		return FeatureMapper.toDTO(featureRepository.getAllInstablleFeaturesByVin(vin));
+	}
+	
+	@Override
+	public List<FeatureDTO> getAllIncompatibleFeaturesByVin(String vin) {
+		return FeatureMapper.toDTO(featureRepository.getAllIncompatibleFeaturesByVin(vin));
 	}
 
 }

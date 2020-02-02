@@ -51,8 +51,8 @@ public class VehicleController extends GenericController {
 	@GetMapping("/{vin}/incompatible")
 	@ApiOperation(value = "Find incompatible features by VIN")
 	public ResponseEntity<FeatureListDTO> getIncompatibles(@PathVariable(required = true) String vin) {
-		FeatureListDTO featureList = null;
-		return ResponseEntity.ok().body(featureList);
+		List<FeatureDTO> featureList = featureService.getAllIncompatibleFeaturesByVin(vin);
+		return ResponseEntity.ok().body(new FeatureListDTO(featureList));
 	}
 	
 	@GetMapping("/{vin}")
