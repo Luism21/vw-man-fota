@@ -37,4 +37,5 @@ public interface FeatureRepository extends JpaRepository<Feature, String> {
 			"WHERE  f.must_be_present = false)", nativeQuery = true)
 	List<Feature> getAllIncompatibleFeaturesByVin(@Param("vin") String vin);
 	
+	
 }

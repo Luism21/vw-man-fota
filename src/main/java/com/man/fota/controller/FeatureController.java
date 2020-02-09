@@ -1,7 +1,5 @@
 package com.man.fota.controller;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -14,8 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.man.fota.dto.feature.FeatureDTO;
 import com.man.fota.dto.feature.FeatureListDTO;
-import com.man.fota.dto.feature.VehicleFeaturesListDTO;
+import com.man.fota.dto.vehicle.FeatureVehiclesListDTO;
+import com.man.fota.dto.vehicle.VehicleListDTO;
 import com.man.fota.service.FeatureService;
+import com.man.fota.service.VehicleService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -25,10 +25,14 @@ import io.swagger.annotations.ApiOperation;
 @Api(tags = {"fota"}, description = "Query possible features per vehicle and possible vehicles per feature")
 public class FeatureController extends GenericController {
 	
-	private static final Logger logger = LogManager.getLogger(FeatureController.class);
+	//private static final Logger logger = LogManager.getLogger(FeatureController.class);
 	
 	@Autowired
 	private FeatureService featureService;
+	
+	@Autowired
+	private VehicleService vehicleService;
+	
 	
 	@GetMapping
 	@ApiOperation(value = "Find all features")
@@ -39,23 +43,25 @@ public class FeatureController extends GenericController {
 	
 	@GetMapping("/{feature}/installable")
 	@ApiOperation(value = "Find installable VIN's by feature code")
-	public ResponseEntity<FeatureListDTO> getInstallables(@PathVariable(required = true) String feature) {
-		FeatureListDTO featureList = null;
-		return ResponseEntity.accepted().body(featureList);
+	public ResponseEntity<VehicleListDTO> getInstallables(@PathVariable(required = true) String feature) {
+		VehicleListDTO vehicleList = new VehicleListDTO();
+		vehicleList.setVehicleList(vehicleService.getAllVinsThatCanInstallAFeature(feature));
+		return ResponseEntity.accepted().body(vehicleList);
 	}
 	
 	@GetMapping("/{feature}/incompatible")
 	@ApiOperation(value = "Find incompatible VIN's by feature code")
-	public ResponseEntity<FeatureListDTO> getIncompatibles(@PathVariable(required = true) String feature) {
-		FeatureListDTO featureList = null;
-		return ResponseEntity.accepted().body(featureList);
+	public ResponseEntity<VehicleListDTO> getIncompatibles(@PathVariable(required = true) String feature) {
+		VehicleListDTO vehicleList = new VehicleListDTO();
+		vehicleList.setVehicleList(vehicleService.getAllVinsThatCannotInstallAFeature(feature));
+		return ResponseEntity.accepted().body(vehicleList);
 	}
 	
 	@GetMapping("/{feature}")
 	@ApiOperation(value = "Find all VIN's by feature code")
-	public ResponseEntity<VehicleFeaturesListDTO> getAllFeatures(@PathVariable(required = true) String feature) {
-		VehicleFeaturesListDTO featureList = null;
-		return ResponseEntity.accepted().body(featureList);
+	public ResponseEntity<FeatureVehiclesListDTO> getAllFeatures(@PathVariable(required = true) String feature) {
+		FeatureVehiclesListDTO featureVehiclesListDTO = vehicleService.getAllVinsByFeature(feature);
+		return ResponseEntity.accepted().body(featureVehiclesListDTO);
 	}
 
 }
