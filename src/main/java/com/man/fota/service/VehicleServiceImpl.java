@@ -1,6 +1,7 @@
 package com.man.fota.service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -58,6 +59,11 @@ public class VehicleServiceImpl implements VehicleService {
 				.map(FeatureCode::getCode)
 				.collect(Collectors.toList());
 		
+		logger.info("Finding all codes that cant be present to install feature: " + featureId);
+		List<String> featureCodeMustNotBePresentList = featureCodeRepository.findAllFeatureCodeByFeatureIdAndMustBePresent(featureId, false).stream()
+				.map(FeatureCode::getCode)
+				.collect(Collectors.toList());
+		
 		logger.info("Converting all vehicles to VehicleDTO");
 		List<VehicleDTO> vehicleDtoList = VehicleMapper.toDTO(vehicleList);
 		
@@ -66,9 +72,11 @@ public class VehicleServiceImpl implements VehicleService {
 			List<String> allVehicleCodes = v.getHardwareCodes();
 			allVehicleCodes.addAll(v.getSoftwareCodes());
 			
-			if(!allVehicleCodes.containsAll(featureCodeMustBePresentList) ){
+			if(!allVehicleCodes.containsAll(featureCodeMustBePresentList) || 
+					!Collections.disjoint(allVehicleCodes, featureCodeMustNotBePresentList) ){
 				listToReturn.remove(v);
 			}
+
 		});
 		
 		
