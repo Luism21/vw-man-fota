@@ -1,4 +1,4 @@
-# Hello There
+# FOTA App
 To build the app and have the tests run you must clone the repository and then run the following command in the pom.xml folder:
 
 mvn clean install spring-boot:repackage -Dspring-boot.run.arguments=--CsvFilesPath=*.csv
