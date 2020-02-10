@@ -14,3 +14,4 @@ Your CSV files will be moved to a new folder named Done inside the same folder t
 The Swagger can be found in the following URL once the app is running:
 http://localhost:8080/fota/swagger-ui.html
 
+The database will be available at http://localhost:8080/fota/h2/
