@@ -5,7 +5,7 @@ mvn clean install spring-boot:repackage -Dspring-boot.run.arguments=--CsvFilesPa
 
 To run the application you must go to the folder where the app has been compiled to and run the following command on terminal:
 
-java -jar fota-0.0.1-SNAPSHOT.jar --CsvFilesPath={your-folder-path}*csv
+java -jar fota-0.0.1-SNAPSHOT.jar --CsvFilesPath={your-csv-files-folder-path}*.csv
 
 Replace the placeholder with the path for your csv files
 
